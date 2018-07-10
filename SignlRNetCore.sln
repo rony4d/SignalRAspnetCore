@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignlRNetCore", "SignlRNetCore\SignlRNetCore.csproj", "{48C326F5-2001-4569-A045-5D1743F65601}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48C326F5-2001-4569-A045-5D1743F65601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48C326F5-2001-4569-A045-5D1743F65601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48C326F5-2001-4569-A045-5D1743F65601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48C326F5-2001-4569-A045-5D1743F65601}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BC377E2-6735-42D3-801A-D4AC0D510A2A}
+	EndGlobalSection
+EndGlobal
