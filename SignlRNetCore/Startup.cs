@@ -33,7 +33,10 @@ namespace SignlRNetCore
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSignalR();
+            services.AddSignalR()
+                //This tells the client to use message pack but server can also accept JSON from other clients
+                .AddMessagePackProtocol();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

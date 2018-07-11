@@ -139,12 +139,16 @@
     </div>
 </div>
 
+<!--Always maintain this order when adding message pack to signalR-->
 <script src="~/lib/signalr/package/dist/browser/signalr.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/msgpack5@4.2.0/dist/msgpack5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@aspnet/signalr-protocol-msgpack@1.0.2/dist/browser/signalr-protocol-msgpack.min.js"></script>
 <script>
     
 
     var connection = new signalR.HubConnectionBuilder()
         .withUrl("/chathub")
+        .withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
         .build();
 
     connection.on('ReceiveMessage', (timestamp, user, message) => {
