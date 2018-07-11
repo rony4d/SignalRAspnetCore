@@ -112,6 +112,7 @@
         padding: 3px;
     }
 </style>
+
 <div class="row">
     <p></p>
     <div class="col-md-12">
@@ -136,6 +137,28 @@
         </form>
         <p></p>
         <ul id="messages" style="list-style-type:none;"></ul>
+    </div>
+</div>
+
+<h3>Stream API</h3>
+<div class="row">
+    <p></p>
+    <div class="col-md-12">
+        <form action="#">
+            <table>
+                <tr>
+                    <td>Number</td>
+                    <td colspan="2">
+                        <input type="number" id="number" />
+                    </td>
+                    <td>
+                        <input type="button" id="startStreaming" value="Start" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <p></p>
+        <ul id="counters" style="list-style-type:none;"></ul>
     </div>
 </div>
 
@@ -166,11 +189,33 @@
         event.preventDefault();
     });
 
+
+    console.log(connection);
+
+    //Handle stream api starts
+
+    document.getElementById('startStreaming').addEventListener('click', event => {
+
+        const number = document.getElementById('number').value;
+        var stream = connection.stream('CountDown', parseInt(number))
+        stream.subscribe({
+            next(item) {// next is called anytime an item is streamed from server to client
+
+                const listItem = document.createElement('li');
+                listItem.innerHTML = ' <b>' + item + '</b> ' ; document.getElementById('counters').appendChild(listItem);
+            }
+
+        })
+        event.preventDefault();
+    });
+
+    //Handle stream api ends
+
     function showErr(msg) {
         const listItem = document.createElement('li'); listItem.setAttribute('style', 'color: red');
         listItem.innerText = msg.toString();
         document.getElementById('messages').appendChild(listItem);
     }
-    console.log(connection);
+
     connection.start().catch(err => showErr(err));
 </script>
