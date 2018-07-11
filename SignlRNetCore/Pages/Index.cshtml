@@ -161,7 +161,8 @@
     document.getElementById('send').addEventListener('click', event => {
         const msg = document.getElementById('message').value;
         const usr = document.getElementById('user').value;
-        connection.invoke('SendMessage', usr, msg).catch(err => showErr(err));
+        var message = { "User": usr, "Message": msg };
+        connection.invoke('SendMessage', message).catch(err => showErr(err));
         event.preventDefault();
     });
 
