@@ -34,7 +34,7 @@ namespace SignlRNetCore
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR()
-                //This tells the client to use message pack but server can also accept JSON from other clients
+                //This tells the client to use message pack but server can also accept JSON from other clients 
                 .AddMessagePackProtocol();
 
         }
@@ -62,6 +62,7 @@ namespace SignlRNetCore
             {
                 routes.MapHub<ChatHub>("/chathub");
             });
+           
            
         }
     }

@@ -11,6 +11,11 @@ namespace SignlRNetCore.Hubs
 {
     public class ChatHub:Hub
     {
+        public override Task OnConnectedAsync()
+        {
+
+            return base.OnConnectedAsync();
+        }
         public Task SendMessage(ChatMessage message)
         {
             string timestamp = DateTime.Now.ToShortTimeString();
@@ -38,8 +43,7 @@ namespace SignlRNetCore.Hubs
             {
                 for (int i = thing; i >= 0; i--)
                 {
-
-                    // await writer.WriteAsync(i); this is buggy, fix later
+                    //await = writer.WriteAsync(i); //this is buggy, fix later
                     writer.TryWrite(i); // this can be used as a replacement
                     await Task.Delay(1000);
                 }
