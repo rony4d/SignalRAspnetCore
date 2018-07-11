@@ -202,6 +202,7 @@
             next(item) {// next is called anytime an item is streamed from server to client
 
                 const listItem = document.createElement('li');
+
                 listItem.innerHTML = ' <b>' + item + '</b> ' ; document.getElementById('counters').appendChild(listItem);
             }
 
@@ -215,6 +216,7 @@
         const listItem = document.createElement('li'); listItem.setAttribute('style', 'color: red');
         listItem.innerText = msg.toString();
         document.getElementById('messages').appendChild(listItem);
+
     }
 
     connection.start().catch(err => showErr(err));
