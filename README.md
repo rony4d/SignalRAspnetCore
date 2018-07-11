@@ -2,7 +2,7 @@
 
 This is a demo project that shows how to use the new SignalR for ASP.NET Core. 
 
-##Features
+## Features
 
 1. SignalR hub setup using routes
 2. Messagepack protocol for transfering data faster
