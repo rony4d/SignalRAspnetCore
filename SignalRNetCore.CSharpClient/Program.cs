@@ -40,9 +40,9 @@ namespace SignalRNetCore.CSharpClient
 
         public static void ConfigureConnection(HubConnection hubConnection)
         {
-            hubConnection.On<ChatMessage>("ReceiveMessage", (message) =>
+            hubConnection.On<string,string,string>("ReceiveMessage", (timestamp,user,message) =>
             {
-                Console.WriteLine($"{DateTime.Now} User: {message.User}, Message: {message.Message}");
+                Console.WriteLine($"{timestamp} User: {user}, Message: {message}");
             });
 
             try
