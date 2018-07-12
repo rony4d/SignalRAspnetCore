@@ -13,8 +13,21 @@ namespace SignlRNetCore.Hubs
     {
         public override Task OnConnectedAsync()
         {
+            ConnectionData connectionData = new ConnectionData();
+            connectionData.ConnectionId = Context.ConnectionId;
+            connectionData.ConnectionTime = DateTime.Now;
+            var httpContext = Context.GetHttpContext();
+            connectionData.Payload = $"Local Port: {httpContext.Connection.LocalPort} \n" +
+                $" Local IP Address: {httpContext.Connection.LocalIpAddress} \n" +
+                $" Connection Id: { httpContext.Connection.Id} \n";
+            ConnectionList.AddUser(connectionData);
 
-            return base.OnConnectedAsync();
+            return Clients.All.SendAsync("ActiveConnections", ConnectionList.connections);
+        }
+
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            return base.OnDisconnectedAsync(exception);
         }
         public Task SendMessage(ChatMessage message)
         {

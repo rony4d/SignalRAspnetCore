@@ -162,12 +162,20 @@
     </div>
 </div>
 
+<h4>Active Connections </h4>
+<div class="row">
+    <p></p>
+    <div class="col-md-12">
+        <p></p>
+        <ul id="activeConnections" style="list-style-type:none;"></ul>
+    </div>
+</div>
 <!--Always maintain this order when adding message pack to signalR-->
 <script src="~/lib/signalr/package/dist/browser/signalr.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/msgpack5@4.2.0/dist/msgpack5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@@aspnet/signalr-protocol-msgpack@1.0.2/dist/browser/signalr-protocol-msgpack.min.js"></script>
 <script>
-    
+
 
     var connection = new signalR.HubConnectionBuilder()
         .withUrl("/chathub")
@@ -178,7 +186,21 @@
         const encodedUser = user;
         const encodedMsg = message;
         const listItem = document.createElement('li');
-        listItem.innerHTML = timestamp + ' <b>' + encodedUser + '</b>: ' + encodedMsg; document.getElementById('messages').appendChild(listItem);
+        listItem.innerHTML = timestamp + ' <b>' + encodedUser + '</b>: ' + encodedMsg;
+        document.getElementById('messages').appendChild(listItem);
+    });
+
+    connection.on('ActiveConnections', (connections) => {
+        console.log(connections);
+        for (var i = 0; i < connections.Length; i++) {
+            const connectionTime = connections[i].ConnectionTime;
+            const connectionId = connections[i].ConnectionId;
+            const payLoad = connections[i].Payload;
+            const listItem = document.createElement('li');
+            listItem.innerHTML = connectionTime + 'Connection ID <b>' + connectionId + '</b>: Payload' + payLoad;
+            document.getElementById('activeConnections').appendChild(listItem);
+        }
+
     });
 
     document.getElementById('send').addEventListener('click', event => {
@@ -203,7 +225,7 @@
 
                 const listItem = document.createElement('li');
 
-                listItem.innerHTML = ' <b>' + item + '</b> ' ; document.getElementById('counters').appendChild(listItem);
+                listItem.innerHTML = ' <b>' + item + '</b> '; document.getElementById('counters').appendChild(listItem);
             }
 
         })

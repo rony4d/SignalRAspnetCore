@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR.Client;
+using SignalRNetCore.CSharpClient.Model;
 using SignlRNetCore.CSharpClient.Model;
 
 namespace SignalRNetCore.CSharpClient
@@ -43,6 +45,15 @@ namespace SignalRNetCore.CSharpClient
             hubConnection.On<string,string,string>("ReceiveMessage", (timestamp,user,message) =>
             {
                 Console.WriteLine($"{timestamp} User: {user}, Message: {message}");
+            });
+
+            hubConnection.On<List<ConnectionData>>("ActiveConnections", (connections) =>
+            {
+                foreach (var connectionData in connections)
+                {
+                    Console.WriteLine($"{connectionData.ConnectionTime} Connection ID: {connectionData.ConnectionId}, Payload: {connectionData.Payload}");
+
+                }
             });
 
             try
