@@ -19,14 +19,20 @@ namespace SignlRNetCore.Hubs
             var httpContext = Context.GetHttpContext();
             connectionData.Payload = $"Local Port: {httpContext.Connection.LocalPort} \n" +
                 $" Local IP Address: {httpContext.Connection.LocalIpAddress} \n" +
-                $" Connection Id: { httpContext.Connection.Id} \n";
+                $" Connection Id: { httpContext.Connection.Id} \n" +
+                $" Project Server Name: ChatHub";
             ConnectionList.AddUser(connectionData);
 
-            return Clients.All.SendAsync("ActiveConnections", ConnectionList.connections);
+            return Clients.All.SendAsync("ActiveConnections", ConnectionList.GetActiveConnections());
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
+            if (ConnectionList.ConnectionDictionary.Keys.Contains(Context.ConnectionId))
+            {
+                ConnectionList.ConnectionDictionary.Remove(Context.ConnectionId);
+
+            }
             return base.OnDisconnectedAsync(exception);
         }
         public Task SendMessage(ChatMessage message)

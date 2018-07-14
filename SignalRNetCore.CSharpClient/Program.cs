@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using SignalRNetCore.CSharpClient.Model;
 using SignlRNetCore.CSharpClient.Model;
@@ -14,8 +15,11 @@ namespace SignalRNetCore.CSharpClient
             HubConnection _hubConnection = new HubConnectionBuilder()
                 .WithUrl("https://localhost:44384/ChatHub")
                 .Build();
-            ConfigureConnection(_hubConnection);
-
+            HubConnection peersHubConnection = new HubConnectionBuilder()
+                .WithUrl("https://localhost:44378/PeersHub")
+                .Build();
+            ConfigureConnection(_hubConnection).GetAwaiter().GetResult();
+            ConfigureConnection(peersHubConnection).GetAwaiter().GetResult();
             Console.WriteLine("Press one to send message...");
             
             int action = Int32.Parse(Console.ReadLine());
@@ -40,7 +44,7 @@ namespace SignalRNetCore.CSharpClient
             
         }
 
-        public static void ConfigureConnection(HubConnection hubConnection)
+        public async static Task ConfigureConnection(HubConnection hubConnection)
         {
             hubConnection.On<string,string,string>("ReceiveMessage", (timestamp,user,message) =>
             {
@@ -58,7 +62,7 @@ namespace SignalRNetCore.CSharpClient
 
             try
             {
-                hubConnection.StartAsync();
+                await hubConnection.StartAsync();
                 Console.WriteLine("Connection Started");
             }
             catch (Exception ex)
